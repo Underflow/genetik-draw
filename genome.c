@@ -1,6 +1,6 @@
 #include <stdlib.h>
+#include <math.h>
 #include "genome.h"
-
 
 /*
  * Translate a gene to make a protein
@@ -11,11 +11,9 @@ Protein gene_translation(Gene gene, int screen_width, int screen_height)
   Protein protein;
   protein.x = (gene.x / 255) * screen_width;
   protein.y = (gene.y / 255) * screen_height;
-  protein.r = gene.r;
-  protein.g = gene.b;
-  protein.a = gene.a;
-  protein.radius = (gene.radius / 255) 
-    * sqrt(screen_width * screen_width + screen_height * screen_height); 
+  protein.color = gene.color;
+  //The radius is actually proportional to the half of screen diagonal
+  protein.radius = (gene.radius / 255) * sqrt(screen_width * screen_width + screen_height * screen_height) / 2; 
 }
 
 
@@ -26,8 +24,7 @@ void randomize_gene(Gene* gene)
 {
   gene->x = 0;
   gene->y = 0;
-  gene->r = 0;
-  gene->b = 0;
+  gene->color = 0;
   gene->radius = 0;
 }
 

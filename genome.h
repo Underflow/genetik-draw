@@ -5,13 +5,13 @@
  */
 typedef struct Protein {
   int x, y;
-  int r, g, b;
+  unsigned int color;
   int radius;
 } Protein;
 
 typedef struct Gene {
   unsigned char x, y;
-  unsigned char r, g, b;
+  unsigned int  color;
   unsigned char radius;
 } Gene;
 
