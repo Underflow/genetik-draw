@@ -4,7 +4,6 @@
 
 int main()
 {
-  Individual *individual = generate_individual(); 
-  free(individual);
+  Individual individual = generate_individual(); 
   return 0;
 }
