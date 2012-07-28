@@ -25,14 +25,18 @@ Individual have_sex(Individual mother, Individual father)
  */
 void draw_individual(SDL_Surface* surface, Individual individual, int screen_width, int screen_height)
 {
-  for(int i = 0; i < NB_GENES; i++)
+  for(int i = 0; i < 1; i++)
   {
     Protein protein = gene_translation(individual.gene[i], surface->w, surface->h); 
     Uint32 pixel = SDL_MapRGBA(surface->format, protein.color.r, protein.color.g, protein.color.b, protein.color.a);
-    int cx = individual.gene[i].x;
-    int cy = individual.gene[i].y;
+    printf("Draw circle\n");
+    printf("Position - X : %d Y : %d\n", protein.x, protein.y);
+    printf("Pixel color : %d, %d, %d\n", protein.color.r, protein.color.g, protein.color.a);
+    int cx = protein.x;
+    int cy = protein.y;
 
     double r = (double)protein.radius;
+    printf("Radius : %f\n", r);
     for (double dy = 1; dy <= r; dy += 1.0)
     {
       double dx = floor(sqrt((2.0 * r * dy) - (dy * dy)));

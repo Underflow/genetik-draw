@@ -9,11 +9,12 @@
 Protein gene_translation(Gene gene, int screen_width, int screen_height)
 {
   Protein protein;
-  protein.x = (gene.x / 255) * screen_width;
-  protein.y = (gene.y / 255) * screen_height;
+  protein.x = (int)((float)gene.x / 255 * screen_width);
+  protein.y = (int)((float)gene.y / 255 * screen_height);
   protein.color = gene.color;
   //The radius is actually proportional to the half of screen diagonal
-  protein.radius = (gene.radius / 255) * sqrt(screen_width * screen_width + screen_height * screen_height) / 2; 
+  protein.radius = (int)((float)gene.radius / 255 * sqrt(screen_width * screen_width + screen_height * screen_height) / 2); 
+  return protein;
 }
 
 
@@ -22,14 +23,14 @@ Protein gene_translation(Gene gene, int screen_width, int screen_height)
  */
 void gene_randomization(Gene* gene)
 {
-  gene->x = 0;
-  gene->y = 0;
+  gene->x = 100;
+  gene->y = 100;
   Color c;
-  c.r = 0;
-  c.g = 0;
-  c.b = 0;
-  c.a = 0;
+  c.r = 255;
+  c.g = 255;
+  c.b = 255;
+  c.a = 255;
   gene->color = c;
-  gene->radius = 0;
+  gene->radius = 50;
 }
 
