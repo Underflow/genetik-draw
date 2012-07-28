@@ -10,9 +10,7 @@ void sdl_loop(SDL_Surface* screen)
   Individual i1 = generate_individual();
   SDL_Surface* drawing = SDL_CreateRGBSurface(SDL_HWSURFACE, screen->w, screen->h, 32, 0, 0, 0, 0); 
   SDL_FillRect(drawing, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
-  SDL_LockSurface(drawing);
   draw_individual(drawing, i1, screen->w, screen->h); 
-  SDL_UnlockSurface(drawing);
   int exit = 0;
   SDL_Event event;
   while (!exit)

@@ -29,9 +29,8 @@ void draw_individual(SDL_Surface* surface, Individual individual, int screen_wid
   for(int i = 0; i < NB_GENES; i++)
   {
     Protein protein = gene_translation(individual.gene[i], surface->w, surface->h); 
-    Uint32 pixel = SDL_MapRGBA(surface->format, protein.color.r, protein.color.g, protein.color.b, protein.color.a);
-
-    draw_disk(surface, protein.x, protein.y, protein.radius, pixel);
+    draw_protein(surface, protein); 
+    //draw_disk(surface, protein.x, protein.y, protein.radius, pixel);
   }
 }
 
@@ -43,9 +42,9 @@ void update_fitness(Individual* individual, SDL_Surface* reference_image)
   unsigned int sum = 0;
   SDL_Surface* surface = SDL_CreateRGBSurface(SDL_HWSURFACE, reference_image->w, reference_image->h, 32, 0, 0, 0, 0);
   SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0, 0, 0));
-  SDL_LockSurface(surface);
-  SDL_LockSurface(reference_image);
   draw_individual(surface, *individual, surface->w, surface->h);
+  SDL_LockSurface(reference_image);
+  SDL_LockSurface(surface);
   for(int x = 0; x < reference_image->w; x++) {
     for(int y = 0; y < reference_image->h; y++) {
       Uint8 r1, g1, b1, a1, r2, g2, b2, a2;
