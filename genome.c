@@ -24,7 +24,12 @@ void randomize_gene(Gene* gene)
 {
   gene->x = 0;
   gene->y = 0;
-  gene->color = 0;
+  Color c;
+  c.r = 0;
+  c.g = 0;
+  c.b = 0;
+  c.a = 0;
+  gene->color = c;
   gene->radius = 0;
 }
 
