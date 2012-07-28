@@ -21,7 +21,7 @@ typedef struct Gene {
 
 typedef struct Individual {
   Gene gene[NB_GENES];
-  int fitness;
+  float fitness;
 } Individual;
 
 typedef struct Population {
