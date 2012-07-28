@@ -24,39 +24,47 @@ Individual have_sex(Individual mother, Individual father)
 /*
  * Draw a surface with the individual informations
  */
-void draw_individual(SDL_Surface* surface, Individual individual, int screen_width, int screen_height)
+void draw_individual(SDL_Surface* surface, Individual individual)
 {
+  SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0, 0, 0));
   for(int i = 0; i < NB_GENES; i++)
   {
     Protein protein = gene_translation(individual.gene[i], surface->w, surface->h); 
     draw_protein(surface, protein); 
-    //draw_disk(surface, protein.x, protein.y, protein.radius, pixel);
   }
 }
 
 /*
+ * Sort a population in function of fitness
+ */
+void sort_population(Population* population)
+{
+
+}
+
+
+/*
  * Update the fitness score of an individual
  */
-void update_fitness(Individual* individual, SDL_Surface* reference_image)
+void update_fitness(Individual* individual, SDL_Surface* model)
 {
   unsigned int sum = 0;
-  SDL_Surface* surface = SDL_CreateRGBSurface(SDL_HWSURFACE, reference_image->w, reference_image->h, 32, 0, 0, 0, 0);
+  SDL_Surface* surface = SDL_CreateRGBSurface(SDL_HWSURFACE, model->w, model->h, 32, 0, 0, 0, 0);
   SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0, 0, 0));
-  draw_individual(surface, *individual, surface->w, surface->h);
-  SDL_LockSurface(reference_image);
+  draw_individual(surface, *individual);
+  SDL_LockSurface(model);
   SDL_LockSurface(surface);
-  for(int x = 0; x < reference_image->w; x++) {
-    for(int y = 0; y < reference_image->h; y++) {
-      Uint8 r1, g1, b1, a1, r2, g2, b2, a2;
-      get_pixel(surface, x, y, &r1, &g1, &b1, &a1);
-      get_pixel(surface, x, y, &r2, &g2, &b2, &a2);
+  for(int x = 0; x < model->w; x++) {
+    for(int y = 0; y < model->h; y++) {
+      Uint8 r1, g1, b1, a1, r2, g2, b2;
+      get_pixel_rgb(surface, x, y, &r1, &g1, &b1);
+      get_pixel_rgb(model, x, y, &r2, &g2, &b2);
       sum+=abs(r1 - r2);
       sum+=abs(g1 - g2);
       sum+=abs(b1 - b2);
-      sum+=abs(a1 - a2);
     }
   }
-  SDL_UnlockSurface(reference_image);
+  SDL_UnlockSurface(model);
   SDL_FreeSurface(surface);
   individual->fitness = sum;
 }
@@ -84,8 +92,7 @@ Individual generate_individual()
   Individual individual;
   individual.fitness = 0;
   //Randomize DNA
-  for(int i = 0; i < NB_GENES; i++)
-  {
+  for(int i = 0; i < NB_GENES; i++) {
     gene_randomization(&individual.gene[i]);
   }
   return individual;
