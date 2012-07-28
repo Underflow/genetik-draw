@@ -3,6 +3,13 @@
 #include "genome.h"
 
 /*
+ * Pick a integer between [min;max[
+ */
+int rand_between(int min, int max) {
+  return rand()%(max-min) +min;
+}
+
+/*
  * Translate a gene to make a protein
  * (Return a circle definition made from a gene)
  */
@@ -23,14 +30,14 @@ Protein gene_translation(Gene gene, int screen_width, int screen_height)
  */
 void gene_randomization(Gene* gene)
 {
-  gene->x = 100;
-  gene->y = 100;
+  gene->x = rand_between(0, 256);
+  gene->y = rand_between(0, 256);
   Color c;
-  c.r = 255;
-  c.g = 255;
-  c.b = 255;
-  c.a = 255;
+  c.r = rand_between(0, 256);
+  c.g = rand_between(0, 256);
+  c.b = rand_between(0, 256);
+  c.a = rand_between(0, 256);
   gene->color = c;
-  gene->radius = 50;
+  gene->radius = rand_between(0, 256);
 }
 
