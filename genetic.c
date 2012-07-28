@@ -25,7 +25,7 @@ Individual have_sex(Individual mother, Individual father)
  */
 void draw_individual(SDL_Surface* surface, Individual individual, int screen_width, int screen_height)
 {
-  for(int i = 0; i < 1; i++)
+  for(int i = 0; i < NB_GENES; i++)
   {
     Protein protein = gene_translation(individual.gene[i], surface->w, surface->h); 
     Uint32 pixel = SDL_MapRGBA(surface->format, protein.color.r, protein.color.g, protein.color.b, protein.color.a);
