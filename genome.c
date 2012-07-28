@@ -20,7 +20,7 @@ Protein gene_translation(Gene gene, int screen_width, int screen_height)
 /*
  * Randomize a single gene
  */
-void randomize_gene(Gene* gene)
+void gene_randomization(Gene* gene)
 {
   gene->x = 0;
   gene->y = 0;

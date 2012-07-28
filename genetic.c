@@ -111,7 +111,7 @@ Individual generate_individual()
   //Randomize DNA
   for(int i = 0; i < NB_GENES; i++)
   {
-    randomize_gene(&individual.gene[i]);
+    gene_randomization(&individual.gene[i]);
   }
   return individual;
 }
