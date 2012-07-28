@@ -33,17 +33,3 @@ void randomize_gene(Gene* gene)
   gene->radius = 0;
 }
 
-/*
- * Generate a random individual
- */
-Individual generate_individual()
-{
-  Individual individual;
-  individual.fitness = 0;
-  //Randomize DNA
-  for(int i = 0; i < NB_GENES; i++)
-  {
-    randomize_gene(&individual.gene[i]);
-  }
-  return individual;
-}

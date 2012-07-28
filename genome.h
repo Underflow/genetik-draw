@@ -31,4 +31,3 @@ typedef struct Population {
 
 Protein gene_translation(Gene gene, int screen_width, int screen_height);
 void randomize_gene(Gene* gene);
-Individual generate_individual();
