@@ -67,6 +67,8 @@ void update_fitness(Individual* individual, SDL_Surface* reference_image)
   unsigned int sum = 0;
   SDL_Surface* surface = SDL_CreateRGBSurface(SDL_HWSURFACE, reference_image->w, reference_image->h, 32, 0, 0, 0, 0);
   SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0, 0, 0));
+  SDL_LockSurface(surface);
+  SDL_LockSurface(reference_image);
   draw_individual(surface, *individual, surface->w, surface->h);
   for(int x = 0; x < reference_image->w; x++) {
     for(int y = 0; y < reference_image->h; y++) {
@@ -79,6 +81,7 @@ void update_fitness(Individual* individual, SDL_Surface* reference_image)
       sum+=abs(a1 - a2);
     }
   }
+  SDL_UnlockSurface(reference_image);
   SDL_FreeSurface(surface);
   individual->fitness = sum;
 }
