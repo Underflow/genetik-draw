@@ -55,11 +55,9 @@ void gang_bang(Population* population)
 void draw_individual(SDL_Surface* surface, Individual* individual)
 {
   for(int i = 0; i < NB_GENES; i++) {
-    if(!individual->gene[i].recessive) {
-      Protein protein;
-      translate_gene(individual->gene[i], surface->w, surface->h, &protein); 
-      draw_protein(surface, protein);
-    }
+    Protein protein;
+    translate_gene(individual->gene[i], surface->w, surface->h, &protein); 
+    draw_protein(surface, protein);
   }
 }
 
@@ -116,7 +114,7 @@ void update_fitness(Individual* individual, SDL_Surface* model)
 {
   unsigned int sum = 0;
   SDL_Surface* surface = SDL_CreateRGBSurface(SDL_HWSURFACE, model->w, model->h, 32, 0, 0, 0, 0);
-  SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 255, 255, 255));
+  SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0, 0, 0));
   draw_individual(surface, individual);
   SDL_LockSurface(model);
   SDL_LockSurface(surface);

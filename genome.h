@@ -19,7 +19,6 @@ typedef struct Gene {
   unsigned char x, y;
   Color color;
   unsigned char length;
-  unsigned char recessive;
 } Gene;
 
 typedef struct Individual {

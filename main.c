@@ -19,7 +19,7 @@ void genetic_loop(SDL_Surface* screen, SDL_Surface* model)
   int exit = 0;
   SDL_Event event;
   while (!exit) {
-    SDL_FillRect(backbuffer, NULL, SDL_MapRGB(backbuffer->format, 255, 255, 255));
+    SDL_FillRect(backbuffer, NULL, SDL_MapRGB(backbuffer->format, 0, 0, 0));
     evaluate_population(&population, model);
     if(n_generation%10 == 0)
       printf("Generation : %d - Best fitness : %f\n", n_generation, 100 - (population.individual[0].fitness / 255 / 3 / backbuffer->w / backbuffer->h) * 100);
