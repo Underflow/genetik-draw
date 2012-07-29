@@ -20,7 +20,7 @@ Protein gene_translation(Gene gene, int screen_width, int screen_height)
   protein.y = (int)((float)gene.y / 255 * screen_height);
   protein.color = gene.color;
   //The radius is actually proportional to the half of screen diagonal
-  protein.length = (int)((float)gene.length / 255 * sqrt(screen_width * screen_width + screen_height * screen_height)); 
+  protein.length = (int)((float)gene.length / 255 * sqrt(screen_width * screen_width + screen_height * screen_height)) / 4; 
   return protein;
 }
 
@@ -37,6 +37,7 @@ void gene_randomization(Gene* gene)
   c.g = rand_between(0, 256);
   c.b = rand_between(0, 256);
   c.a = rand_between(0, 256);
+  gene->junk_dna = !(rand_between(0, 50) == 42);
   gene->color = c;
   gene->length = rand_between(0, 256);
 }

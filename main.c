@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -7,32 +8,33 @@
 
 void genetic_loop(SDL_Surface* screen, SDL_Surface* model)
 {
-  Individual i1 = generate_individual();
+  Individual i1;
   SDL_Surface* backbuffer = SDL_CreateRGBSurface(SDL_HWSURFACE, 
                                               screen->w,
                                               screen->h, 
                                               32, 0, 0, 0, 0); 
-  
-  update_fitness(&i1, model);
-  draw_individual(backbuffer, i1); 
- 
-
 
   int exit = 0;
   SDL_Event event;
+  int i = 0;
   while (!exit)
   {
-    SDL_Rect pos;
-    pos.x = 0;
-    pos.y = 0;
-    SDL_BlitSurface(backbuffer, NULL, screen, &pos); 
+    i++;
+    i1 = generate_individual();
+    update_fitness(&i1, model);
+    draw_individual(backbuffer, i1);
+    
+    //Display the backbuffer
+    SDL_BlitSurface(backbuffer, NULL, screen, NULL); 
     SDL_Flip(screen);
+    //Handle events
     SDL_PollEvent(&event);
     switch(event.type)
     {
       case SDL_QUIT:
       exit = 1;
-     }
+    }
+    sleep(1);
   }
 }
 

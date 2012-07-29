@@ -6,16 +6,20 @@
 #include "draw.h"
 /*
  * Process a crossover to create a new individual
- * [I have to document myself more to write the crossover function correctly]
  */
 Individual have_sex(Individual mother, Individual father)
 {
   Individual baby;
   for(int i = 0; i < NB_GENES; i++) {
-    if(i % 2 == 0) {
-      baby.gene[i] = mother.gene[i]; 
-    } else {
+    if(mother.gene[i].junk_dna && !father.gene[i].junk_dna)
       baby.gene[i] = father.gene[i];
+    else if(!mother.gene[i].junk_dna && father.gene[i].junk_dna)
+      baby.gene[i] = mother.gene[i];
+    else {
+      if(rand() % 2 == 0)
+        baby.gene[i] = father.gene[i];
+      else
+        baby.gene[i] = mother.gene[i];
     }
   }
   return baby;
@@ -29,8 +33,10 @@ void draw_individual(SDL_Surface* surface, Individual individual)
   SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0, 0, 0));
   for(int i = 0; i < NB_GENES; i++)
   {
-    Protein protein = gene_translation(individual.gene[i], surface->w, surface->h); 
-    draw_protein(surface, protein); 
+    if(!individual.gene[i].junk_dna) {
+      Protein protein = gene_translation(individual.gene[i], surface->w, surface->h); 
+      draw_protein(surface, protein);
+    }
   }
 }
 
@@ -59,15 +65,17 @@ void update_fitness(Individual* individual, SDL_Surface* model)
       Uint8 r1, g1, b1, a1, r2, g2, b2;
       get_pixel_rgb(surface, x, y, &r1, &g1, &b1);
       get_pixel_rgb(model, x, y, &r2, &g2, &b2);
-      sum+=abs(r1 - r2);
-      sum+=abs(g1 - g2);
-      sum+=abs(b1 - b2);
+      int r_delta=abs(r1 - r2);
+      int g_delta=abs(g1 - g2);
+      int b_delta=abs(b1 - b2);
+      sum+=r_delta * r_delta + g_delta * g_delta + b_delta * b_delta;
     }
   }
   SDL_UnlockSurface(model);
   SDL_FreeSurface(surface);
   individual->fitness = sum;
 }
+
 
 /*
  * Generate a random population

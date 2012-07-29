@@ -7,7 +7,7 @@ typedef struct Color {
 } Color;
 
 /*
- * This is a protein... or a square definition
+ * This is a protein. Not convinced ?
  */
 typedef struct Protein {
   int x, y;
@@ -19,11 +19,12 @@ typedef struct Gene {
   unsigned char x, y;
   Color color;
   unsigned char length;
+  unsigned char junk_dna;
 } Gene;
 
 typedef struct Individual {
   Gene gene[NB_GENES];
-  unsigned int fitness;
+  double fitness;
 } Individual;
 
 typedef struct Population {
