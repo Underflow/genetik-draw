@@ -14,7 +14,7 @@ void genetic_loop(SDL_Surface* screen, SDL_Surface* model)
                                               screen->w,
                                               screen->h, 
                                               32, 0, 0, 0, 0); 
-  generate_population(10, &population);
+  generate_population(30, &population);
 evaluate_population(&population, model);
   int exit = 0;
   SDL_Event event;
@@ -22,11 +22,11 @@ evaluate_population(&population, model);
     SDL_FillRect(backbuffer, NULL, SDL_MapRGB(backbuffer->format, 0, 0, 0));
     evaluate_population(&population, model);
     if(n_generation%10 == 0)
-      printf("Generation : %d - Best fitness : %f\n", n_generation, 100 - (population.individual[0].fitness / 255 / 3 / backbuffer->w / backbuffer->h * 16) * 100);
+      printf("Generation : %d - Bestfitness : %f\n", n_generation, 100 - (population.individual[0].fitness / 255 / 3 / backbuffer->w / backbuffer->h) * 100);
     n_generation++;
     gang_bang(&population);
-    mutate_population(&population);
     draw_individual(backbuffer, &population.individual[0]);
+    mutate_population(&population);
     //Display the backbuffer
     SDL_BlitSurface(backbuffer, NULL, screen, NULL); 
     SDL_Flip(screen);

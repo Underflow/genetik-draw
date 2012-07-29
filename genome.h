@@ -1,6 +1,6 @@
 #ifndef GENOME
 #define GENOME
-#define NB_GENES 150
+#define NB_GENES 400
 
 typedef struct Color {
   unsigned char r, g, b, a;

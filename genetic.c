@@ -23,7 +23,7 @@ void have_sex(const Individual* mother, const Individual* father, Individual* ba
 Individual* find_good_individual(Population* sorted_population)
 {
   for(int i = 0; i < sorted_population->size; i ++)
-    if(rand() % 4 == 0) {
+    if(rand() % 2 == 0) {
       return &sorted_population->individual[i];
     }
   return &sorted_population->individual[0]; /* this could happend on 
@@ -118,8 +118,8 @@ void update_fitness(Individual* individual, SDL_Surface* model)
   draw_individual(surface, individual);
   SDL_LockSurface(model);
   SDL_LockSurface(surface);
-  for(int x = 0; x < model->w; x+=4) {
-    for(int y = 0; y < model->h; y+=4) {
+  for(int x = 0; x < model->w; x++) {
+    for(int y = 0; y < model->h; y++) {
       Uint8 r1, g1, b1, a1, r2, g2, b2;
       get_pixel_rgb(surface, x, y, &r1, &g1, &b1);
       get_pixel_rgb(model, x, y, &r2, &g2, &b2);
