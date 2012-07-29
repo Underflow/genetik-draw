@@ -8,21 +8,20 @@
 
 void genetic_loop(SDL_Surface* screen, SDL_Surface* model)
 {
-  Individual i1;
+  Population population;
   SDL_Surface* backbuffer = SDL_CreateRGBSurface(SDL_HWSURFACE, 
                                               screen->w,
                                               screen->h, 
                                               32, 0, 0, 0, 0); 
+  generate_population(20, &population);
 
   int exit = 0;
   SDL_Event event;
-  int i = 0;
   while (!exit) {
-    i++;
-    generate_individual(&i1);
-    update_fitness(&i1, model);
-    draw_individual(backbuffer, &i1);
+    mutate_population(&population);
     
+    draw_individual(backbuffer, &population.individual[0]);
+
     //Display the backbuffer
     SDL_BlitSurface(backbuffer, NULL, screen, NULL); 
     SDL_Flip(screen);
@@ -33,7 +32,6 @@ void genetic_loop(SDL_Surface* screen, SDL_Surface* model)
       case SDL_QUIT:
       exit = 1;
     }
-    sleep(1);
   }
 }
 

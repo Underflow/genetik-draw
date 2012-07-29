@@ -7,7 +7,7 @@
 /*
  * Process a crossover to create a new individual
  */
-void have_sex(Individual* mother, Individual* father, Individual* baby)
+void have_sex(const Individual* mother, const Individual* father, Individual* baby)
 {
   for(int i = 0; i < NB_GENES; i++) {
     if(mother->gene[i].recessive && !father->gene[i].recessive)
@@ -31,7 +31,8 @@ void draw_individual(SDL_Surface* surface, Individual* individual)
   SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0, 0, 0));
   for(int i = 0; i < NB_GENES; i++) {
     if(!individual->gene[i].recessive) {
-      Protein protein = gene_translation(individual->gene[i], surface->w, surface->h); 
+      Protein protein;
+      translate_gene(individual->gene[i], surface->w, surface->h, &protein); 
       draw_protein(surface, protein);
     }
   }
@@ -43,6 +44,18 @@ void draw_individual(SDL_Surface* surface, Individual* individual)
 void sort_population(Population* population)
 {
 
+}
+
+/*
+ * Mutate the whole genes of a population
+ */
+void mutate_population(Population* population)
+{
+  for(int i = 0; i < population->size; i++) {
+    for(int j = 0; j < NB_GENES; j++) {
+      mutate_gene(&population->individual[i].gene[j]);
+    }
+  }
 }
 
 
@@ -93,6 +106,6 @@ void generate_individual(Individual* individual)
   individual->fitness = 0;
   //Randomize DNA
   for(int i = 0; i < NB_GENES; i++) {
-    gene_randomization(&individual->gene[i]);
+    randomize_gene(&individual->gene[i]);
   }
 }
