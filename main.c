@@ -13,13 +13,15 @@ void genetic_loop(SDL_Surface* screen, SDL_Surface* model)
                                               screen->w,
                                               screen->h, 
                                               32, 0, 0, 0, 0); 
-  generate_population(20, &population);
-
+  generate_population(10, &population);
+  evaluate_population(&population, model);
   int exit = 0;
   SDL_Event event;
   while (!exit) {
+    SDL_FillRect(backbuffer, NULL, SDL_MapRGB(backbuffer->format, 0, 0, 0));
+    evaluate_population(&population, model);
+    gang_bang(&population);
     mutate_population(&population);
-    
     draw_individual(backbuffer, &population.individual[0]);
 
     //Display the backbuffer

@@ -24,6 +24,37 @@ void have_sex(const Individual* mother, const Individual* father, Individual* ba
 }
 
 /*
+ * Find a good individual in a sorted population
+ */
+Individual* find_good_individual(Population* sorted_population)
+{
+  for(int i = 0; i < sorted_population->size; i ++)
+    if(rand() % 30 == 0)
+      return &sorted_population->individual[i];
+  return &sorted_population->individual[0]; /* this could happend on 
+                                               a small population */
+}
+
+/*
+ * Generate a new population
+ */
+void gang_bang(Population* population)
+{
+  sort_population(population);
+  Population new_population;
+  new_population.size = population->size;
+  new_population.individual = malloc(sizeof(Individual) * population->size);
+  
+  for(int i = 0; i < population->size; i++) {
+    have_sex(find_good_individual(population),
+             find_good_individual(population),
+             &new_population.individual[i]); 
+  }
+  free(population->individual);
+  *population = new_population;
+}
+
+/*
  * Draw a surface with the individual informations
  */
 void draw_individual(SDL_Surface* surface, Individual* individual)
@@ -43,7 +74,13 @@ void draw_individual(SDL_Surface* surface, Individual* individual)
  */
 void sort_population(Population* population)
 {
-
+  int i, j;
+  for(int i = 1; i < population->size; ++i) {
+    Individual k = population->individual[i];
+    for(j = i; j > 0 && population->individual[j-1].fitness > k.fitness; j--)
+      population->individual[j] = population->individual[j-1];
+    population->individual[j] = k;
+  }
 }
 
 /*
@@ -58,6 +95,14 @@ void mutate_population(Population* population)
   }
 }
 
+/*
+ * Evaluate the adaptation of the generation to the problem
+ */
+void evaluate_population(Population* population, SDL_Surface* model)
+{
+  for(int i = 0; i < population->size; i++)
+    update_fitness(&population->individual[i], model);
+}
 
 /*
  * Update the fitness score of an individual

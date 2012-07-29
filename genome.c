@@ -36,7 +36,8 @@ void randomize_gene(Gene* gene)
   c.g = rand_between(0, 256);
   c.b = rand_between(0, 256);
   c.a = rand_between(0, 256);
-  gene->recessive = !(rand_between(0, 50) == 42);
+  //gene->recessive = !(rand_between(0, 50) == 42);
+  gene->recessive = 0;
   gene->color = c;
   gene->length = rand_between(0, 256);
 }
@@ -55,7 +56,7 @@ void mutate_gene(Gene* gene)
     gene->color.g = rand_between(0,256);
     gene->color.b = rand_between(0,256);
   }
-  if(rand() % 100000 == 0) {
-    gene->recessive = 0;
-  }
+  //if(rand() % 100 == 0) {
+  //  gene->recessive = !gene->recessive;
+  //}
 }
