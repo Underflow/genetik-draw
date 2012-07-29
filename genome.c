@@ -33,16 +33,10 @@ void gene_randomization(Gene* gene)
   gene->x = rand_between(0, 256);
   gene->y = rand_between(0, 256);
   Color c;
-  /*
   c.r = rand_between(0, 256);
   c.g = rand_between(0, 256);
   c.b = rand_between(0, 256);
   c.a = rand_between(0, 256);
-  */
-  c.r = 0;
-  c.g = 0;
-  c.b = 0;
-  c.a = 0;
   gene->color = c;
   gene->length = rand_between(0, 256);
 }
