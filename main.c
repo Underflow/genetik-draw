@@ -17,12 +17,11 @@ void genetic_loop(SDL_Surface* screen, SDL_Surface* model)
   int exit = 0;
   SDL_Event event;
   int i = 0;
-  while (!exit)
-  {
+  while (!exit) {
     i++;
-    i1 = generate_individual();
+    generate_individual(&i1);
     update_fitness(&i1, model);
-    draw_individual(backbuffer, i1);
+    draw_individual(backbuffer, &i1);
     
     //Display the backbuffer
     SDL_BlitSurface(backbuffer, NULL, screen, NULL); 

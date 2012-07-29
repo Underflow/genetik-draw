@@ -7,34 +7,31 @@
 /*
  * Process a crossover to create a new individual
  */
-Individual have_sex(Individual mother, Individual father)
+void have_sex(Individual* mother, Individual* father, Individual* baby)
 {
-  Individual baby;
   for(int i = 0; i < NB_GENES; i++) {
-    if(mother.gene[i].junk_dna && !father.gene[i].junk_dna)
-      baby.gene[i] = father.gene[i];
-    else if(!mother.gene[i].junk_dna && father.gene[i].junk_dna)
-      baby.gene[i] = mother.gene[i];
+    if(mother->gene[i].recessive && !father->gene[i].recessive)
+      baby->gene[i] = father->gene[i];
+    else if(!mother->gene[i].recessive && father->gene[i].recessive)
+      baby->gene[i] = mother->gene[i];
     else {
       if(rand() % 2 == 0)
-        baby.gene[i] = father.gene[i];
+      baby->gene[i] = father->gene[i];
       else
-        baby.gene[i] = mother.gene[i];
+        baby->gene[i] = mother->gene[i];
     }
   }
-  return baby;
 }
 
 /*
  * Draw a surface with the individual informations
  */
-void draw_individual(SDL_Surface* surface, Individual individual)
+void draw_individual(SDL_Surface* surface, Individual* individual)
 {
   SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0, 0, 0));
-  for(int i = 0; i < NB_GENES; i++)
-  {
-    if(!individual.gene[i].junk_dna) {
-      Protein protein = gene_translation(individual.gene[i], surface->w, surface->h); 
+  for(int i = 0; i < NB_GENES; i++) {
+    if(!individual->gene[i].recessive) {
+      Protein protein = gene_translation(individual->gene[i], surface->w, surface->h); 
       draw_protein(surface, protein);
     }
   }
@@ -57,7 +54,7 @@ void update_fitness(Individual* individual, SDL_Surface* model)
   unsigned int sum = 0;
   SDL_Surface* surface = SDL_CreateRGBSurface(SDL_HWSURFACE, model->w, model->h, 32, 0, 0, 0, 0);
   SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0, 0, 0));
-  draw_individual(surface, *individual);
+  draw_individual(surface, individual);
   SDL_LockSurface(model);
   SDL_LockSurface(surface);
   for(int x = 0; x < model->w; x++) {
@@ -80,28 +77,22 @@ void update_fitness(Individual* individual, SDL_Surface* model)
 /*
  * Generate a random population
  */
-Population generate_population(int size)
+void generate_population(int size, Population* population)
 {
-  Population population;
-  population.size = size;
-  population.individual = malloc(sizeof(Individual) * size);
-  for(int i = 0; i < size; i++) {
-    population.individual[i] = generate_individual();
-  }
-
-  return population;
+  population->size = size;
+  population->individual = malloc(sizeof(Individual) * size);
+  for(int i = 0; i < size; i++)
+    generate_individual(&population->individual[i]);
 }
 
 /*
  * Generate a random individual
  */
-Individual generate_individual()
+void generate_individual(Individual* individual)
 {
-  Individual individual;
-  individual.fitness = 0;
+  individual->fitness = 0;
   //Randomize DNA
   for(int i = 0; i < NB_GENES; i++) {
-    gene_randomization(&individual.gene[i]);
+    gene_randomization(&individual->gene[i]);
   }
-  return individual;
 }

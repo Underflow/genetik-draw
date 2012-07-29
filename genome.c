@@ -5,7 +5,8 @@
 /*
  * Pick a integer between [min;max[
  */
-int rand_between(int min, int max) {
+int rand_between(int min, int max) 
+{
   return rand()%(max-min) +min;
 }
 
@@ -37,7 +38,7 @@ void gene_randomization(Gene* gene)
   c.g = rand_between(0, 256);
   c.b = rand_between(0, 256);
   c.a = rand_between(0, 256);
-  gene->junk_dna = !(rand_between(0, 50) == 42);
+  gene->recessive = !(rand_between(0, 50) == 42);
   gene->color = c;
   gene->length = rand_between(0, 256);
 }
