@@ -45,17 +45,18 @@ void randomize_gene(Gene* gene)
  */
 void mutate_gene(Gene* gene)
 {
-  if(rand() % 500 == 0 ) {
+  if(rand() % 1000 == 0 )
     gene->x = rand_between(0,256);
+  if(rand() % 1000 == 0)  
     gene->y = rand_between(0,256);
-  }
-  if(rand() % 500 == 0)
+ 
+  if(rand() % 1000 == 0)
     gene->color.r = rand_between(0,256);
-  if(rand() % 500 == 0)
+  if(rand() % 1000 == 0)
     gene->color.g = rand_between(0,256);
-  if(rand() % 500 == 0)
+  if(rand() % 1000 == 0)
     gene->color.b = rand_between(0,256);
-  if(rand() % 500 == 0)
+  if(rand() % 1000 == 0)
     gene->color.a = rand_between(0,256);
 
   if(rand() % 500 == 0)
