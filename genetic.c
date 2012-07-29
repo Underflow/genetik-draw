@@ -10,16 +10,10 @@
 void have_sex(const Individual* mother, const Individual* father, Individual* baby)
 {
   for(int i = 0; i < NB_GENES; i++) {
-    if(mother->gene[i].recessive && !father->gene[i].recessive)
-      baby->gene[i] = father->gene[i];
-    else if(!mother->gene[i].recessive && father->gene[i].recessive)
-      baby->gene[i] = mother->gene[i];
-    else {
       if(rand() % 2 == 0)
       baby->gene[i] = father->gene[i];
       else
         baby->gene[i] = mother->gene[i];
-    }
   }
 }
 
@@ -29,8 +23,9 @@ void have_sex(const Individual* mother, const Individual* father, Individual* ba
 Individual* find_good_individual(Population* sorted_population)
 {
   for(int i = 0; i < sorted_population->size; i ++)
-    if(rand() % 30 == 0)
+    if(rand() % 4 == 0) {
       return &sorted_population->individual[i];
+    }
   return &sorted_population->individual[0]; /* this could happend on 
                                                a small population */
 }
@@ -59,7 +54,6 @@ void gang_bang(Population* population)
  */
 void draw_individual(SDL_Surface* surface, Individual* individual)
 {
-  SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0, 0, 0));
   for(int i = 0; i < NB_GENES; i++) {
     if(!individual->gene[i].recessive) {
       Protein protein;
@@ -88,7 +82,18 @@ void sort_population(Population* population)
  */
 void mutate_population(Population* population)
 {
-  for(int i = 0; i < population->size; i++) {
+  for(int i = 1; i < population->size; i++) {
+    //Swap genes
+    if(rand() % 2 == 0) {
+      int g1 = rand_between(0, NB_GENES);
+      int g2 = rand_between(0, NB_GENES);
+
+      Gene tmp = population->individual[i].gene[g1];
+      population->individual[i].gene[g1] = population->individual[i].gene[g2];
+      population->individual[i].gene[g2] = tmp;
+    }
+    
+    //Gene mutation
     for(int j = 0; j < NB_GENES; j++) {
       mutate_gene(&population->individual[i].gene[j]);
     }
@@ -111,7 +116,7 @@ void update_fitness(Individual* individual, SDL_Surface* model)
 {
   unsigned int sum = 0;
   SDL_Surface* surface = SDL_CreateRGBSurface(SDL_HWSURFACE, model->w, model->h, 32, 0, 0, 0, 0);
-  SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0, 0, 0));
+  SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 255, 255, 255));
   draw_individual(surface, individual);
   SDL_LockSurface(model);
   SDL_LockSurface(surface);
@@ -123,7 +128,7 @@ void update_fitness(Individual* individual, SDL_Surface* model)
       int r_delta=abs(r1 - r2);
       int g_delta=abs(g1 - g2);
       int b_delta=abs(b1 - b2);
-      sum+=r_delta * r_delta + g_delta * g_delta + b_delta * b_delta;
+      sum+=r_delta + g_delta + b_delta;
     }
   }
   SDL_UnlockSurface(model);

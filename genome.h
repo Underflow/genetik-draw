@@ -1,6 +1,6 @@
 #ifndef GENOME
 #define GENOME
-#define NB_GENES 150
+#define NB_GENES 100
 
 typedef struct Color {
   unsigned char r, g, b, a;
@@ -33,6 +33,7 @@ typedef struct Population {
 } Population;
 
 
+int rand_between(int min, int max);
 void translate_gene(Gene gene, int screen_width, int screen_height, Protein* protein);
 void randomize_gene(Gene* gene);
 void mutate_gene(Gene* gene);
