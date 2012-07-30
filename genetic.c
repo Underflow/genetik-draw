@@ -81,15 +81,6 @@ void sort_population(Population* population)
 void mutate_population(Population* population)
 {
   for(int i = 0; i < population->size; i++) {
-    //Swap genes
-    if(rand() % 2 == 0) {
-      int g1 = rand_between(0, NB_GENES);
-      int g2 = rand_between(0, NB_GENES);
-
-      Gene tmp = population->individual[i].gene[g1];
-      population->individual[i].gene[g1] = population->individual[i].gene[g2];
-      population->individual[i].gene[g2] = tmp;
-    }
     
     //Gene mutation
     for(int j = 0; j < NB_GENES; j++) {
