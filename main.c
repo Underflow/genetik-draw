@@ -10,11 +10,11 @@ void genetic_loop(SDL_Surface* screen, SDL_Surface* model)
 {
   int n_generation = 0;
   Population population;
-  SDL_Surface* backbuffer = SDL_CreateRGBSurface(SDL_HWSURFACE, 
+  SDL_Surface* backbuffer = SDL_CreateRGBSurface(SDL_SWSURFACE, 
                                               screen->w,
                                               screen->h, 
                                               32, 0, 0, 0, 0); 
-  generate_population(20, &population);
+  generate_population(30, &population);
 evaluate_population(&population, model);
   int exit = 0;
   SDL_Event event;
@@ -45,7 +45,7 @@ int main()
   srand(time(NULL));
   SDL_Init(SDL_INIT_VIDEO);
   SDL_Surface* model = SDL_LoadBMP("model.bmp");
-  SDL_Surface* screen = SDL_SetVideoMode(model->w, model->h, 32, SDL_HWSURFACE);
+  SDL_Surface* screen = SDL_SetVideoMode(model->w, model->h, 32, SDL_SWSURFACE);
   genetic_loop(screen, model);
   SDL_Quit();
   return EXIT_SUCCESS;

@@ -104,7 +104,7 @@ void evaluate_population(Population* population, SDL_Surface* model)
 void update_fitness(Individual* individual, SDL_Surface* model)
 {
   unsigned int sum = 0;
-  SDL_Surface* surface = SDL_CreateRGBSurface(SDL_HWSURFACE, model->w, model->h, 32, 0, 0, 0, 0);
+  SDL_Surface* surface = SDL_CreateRGBSurface(SDL_SWSURFACE, model->w, model->h, 32, 0, 0, 0, 0);
   SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0, 0, 0));
   draw_individual(surface, individual);
   SDL_LockSurface(model);
