@@ -35,7 +35,6 @@ Individual* find_good_individual(Population* sorted_population)
  */
 void gang_bang(Population* population)
 {
-  sort_population(population);
   Population new_population;
   new_population.size = population->size;
   new_population.individual = malloc(sizeof(Individual) * population->size);
